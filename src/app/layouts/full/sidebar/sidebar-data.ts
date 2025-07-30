@@ -9,17 +9,13 @@ export const navItems: NavItem[] = [
     iconName: 'solar:atom-line-duotone',
     route: '/dashboard',
   },
-  {
-    displayName: 'Analytics',
-    iconName: 'solar:widget-add-line-duotone',
-    route: 'https://materialm-angular-main.netlify.app/dashboards/dashboard1',
-    chip: true,
-    external: true,
-    chipClass: 'bg-light-secondary text-secondary',
-    chipContent: 'PRO',
+   {
+    displayName: 'Escuelas',
+    iconName: 'solar:backpack-line-duotone',
+    route: '/ui-components/schools',
   },
   {
-    displayName: 'eCommerce',
+    displayName: 'Conduces',
     iconName: 'solar:chart-line-duotone',
     route: 'https://materialm-angular-main.netlify.app/dashboards/dashboard2',
     chip: true,
@@ -28,18 +24,8 @@ export const navItems: NavItem[] = [
     chipContent: 'PRO',
   },
   {
-    displayName: 'CRM',
-    iconName: 'solar:screencast-2-line-duotone',
-    route: 'https://materialm-angular-main.netlify.app/dashboards/dashboard3',
-    chip: true,
-    external: true,
-    chipClass: 'bg-light-secondary text-secondary',
-    chipContent: 'PRO',
-  },
-
-  {
     divider: true,
-    navCap: 'Apps',
+    navCap: 'Opciones',
   },
   {
     displayName: 'Chat',
