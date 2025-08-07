@@ -92,6 +92,8 @@ export class FullComponent implements OnInit {
     if (this.userService.setLoginValue()) {
       this.userService.getLoggedRequest().subscribe((data) => {
       });
+    }else{
+      this.userService.logout();
     };
   }
 

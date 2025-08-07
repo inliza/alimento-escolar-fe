@@ -1,0 +1,49 @@
+<mat-card class="cardWithShadow full-width"> 
+    <mat-card-header>
+        <mat-card-title class="m-b-0">Escuelas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <!-- <mat-card-title>Table</mat-card-title> -->
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">País</th>
+                        <th scope="col">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+     
+                        <td>Escuela Primaria</td>
+                        <td>123-456-7890</td>
+                        <td>España</td>
+                        <td>
+                            <button mat-icon-button class="table-icon panel-icon-edit" data-toggle="tooltip"
+                                data-placement="top" title="Editar">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button mat-icon-button class="table-icon panel-icon-delete" data-toggle="tooltip"
+                                data-placement="top" title="Eliminar">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- <tr *ngFor="let item of students; let j = index">
+                        <td>{{ j + 1 }}</td>
+                        <td>{{ item.firstname }} {{ item.lastname }}</td>
+                        <td>{{ item.phone }}</td>
+                        <td>{{ item.pais }}</td>
+                        <td>
+                            <button mat-icon-button class="table-icon panel-icon-delete" data-toggle="tooltip"
+                                data-placement="top" title="Remover" (click)="removeStudentFromGroup(item, option)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content></mat-card>

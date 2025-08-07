@@ -1,0 +1,12 @@
+// .full-width {
+//   width: 100%;
+//   box-sizing: border-box;
+// }
+
+::ng-deep mat-card.cardWithShadow {
+    width: 100vw;
+    border-radius: 8px;
+    /* o el valor que uses */
+    box-sizing: border-box;
+    //   margin-left: calc(-50vw + 50%);
+}
