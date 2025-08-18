@@ -9,6 +9,8 @@ import { AppTooltipsComponent } from './tooltips/tooltips.component';
 import { AppFormsComponent } from './forms/forms.component';
 import { AppTablesComponent } from './tables/tables.component';
 import { SchoolsComponent } from '../schools/schools.component';
+import { ConducesComponent } from '../conduces/conduces.component';
+import { MenuComponent } from '../menu/menu.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -45,6 +47,14 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'schools',
         component: SchoolsComponent,
+      },
+      {
+        path: 'conduces',
+        component: ConducesComponent,
+      },
+      {
+        path: 'menu-escolar',
+        component: MenuComponent,
       },
     ],
   },

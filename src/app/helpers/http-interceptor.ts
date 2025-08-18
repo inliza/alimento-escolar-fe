@@ -38,17 +38,10 @@ export class Http_Interceptor implements HttpInterceptor {
         (event: HttpEvent<any>) => { },
         (err: Response) => {
           if (err.status === 401 || err.status === 403) {
-            var ruta = window.location.href;
-            if (ruta.includes('/dashboard')) {
-              // setTimeout(() => {
-              this.helperModal.closeAll();
-              this.toast.showToast('warning', 'Su sesión ha expirado. Por favor inicie sesión.', 'center');
-              this.userService.logout();
-              // }, 0);
-            } else {
-              this.helperModal.closeAll();
-              this.userService.logoutNoRedirect();
-            }
+            // var ruta = window.location.href;
+            this.helperModal.closeAll();
+            this.toast.showToast('warning', 'Su sesión ha expirado. Por favor inicie sesión.', 'center');
+            this.userService.logout();
 
           }
 

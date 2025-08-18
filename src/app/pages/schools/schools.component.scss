@@ -4,9 +4,17 @@
 // }
 
 ::ng-deep mat-card.cardWithShadow {
-    width: 100vw;
+    // width: 100vw;
     border-radius: 8px;
     /* o el valor que uses */
     box-sizing: border-box;
     //   margin-left: calc(-50vw + 50%);
+}
+
+
+.option-button {
+    border: solid 1px;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
 }

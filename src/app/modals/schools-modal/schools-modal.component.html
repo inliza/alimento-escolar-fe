@@ -1,0 +1,150 @@
+<h2 mat-dialog-title class="text-center">{{!editing ? 'Agregar' : 'Editar'}} Escuela</h2>
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="row g-3 p-32">
+
+    <!-- Nombre -->
+    <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre Escuela</mat-label>
+            <input matInput name="nombre" [(ngModel)]="model.nombre" required #nombre="ngModel" />
+            <mat-error *ngIf="nombre.invalid && (nombre.touched || f.submitted)">
+                El nombre es obligatorio
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Dirección -->
+    <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Dirección</mat-label>
+            <input matInput name="direccion" [(ngModel)]="model.direccion" required #direccion="ngModel" />
+            <mat-error *ngIf="direccion.invalid && (direccion.touched || f.submitted)">
+                La dirección es obligatoria
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Director -->
+    <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Director</mat-label>
+            <input matInput name="director" [(ngModel)]="model.director" required #director="ngModel" />
+            <mat-error *ngIf="director.invalid && (director.touched || f.submitted)">
+                El director es obligatorio
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Teléfono (opcional) -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Teléfono</mat-label>
+            <input maxlength="12" placeholder="Ej: 809-555-5555" matInput [(ngModel)]="model.telefono" name="telefono"
+                #telefono="ngModel" required />
+            <mat-error *ngIf="telefono.invalid && (telefono.touched || f.submitted)">
+                El teléfono es obligatorio
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+
+    <!-- Código Escuela -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Código Escuela</mat-label>
+            <input maxlength="5" matInput name="codigoEscuela" [(ngModel)]="model.codigoEscuela" required
+                #codigoEscuela="ngModel" />
+            <mat-error *ngIf="codigoEscuela.invalid && (codigoEscuela.touched || f.submitted)">
+                El código es obligatorio
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Provincia (Select) -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Provincia</mat-label>
+            <mat-select name="idprovincia" [(ngModel)]="model.idLocalidad" required #idLocalidad="ngModel"
+                (selectionChange)="onProvinciaChange($event)">
+                <mat-option *ngFor="let loc of provincias" [value]="loc.id">
+                    {{ loc.nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="idLocalidad.invalid && (idLocalidad.touched || f.submitted)">
+                Seleccione una pronvicia
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+
+    <!-- Localidad (Select) -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Localidad</mat-label>
+            <mat-select name="idLocalidad" [(ngModel)]="model.idLocalidad" required #idLocalidad="ngModel">
+                <mat-option *ngFor="let loc of localidades" [value]="loc.id">
+                    {{ loc.nombre }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="idLocalidad.invalid && (idLocalidad.touched || f.submitted)">
+                Seleccione una localidad
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Distrito (Select) -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Distrito</mat-label>
+            <mat-select name="idDistrito" [(ngModel)]="model.idDistrito" required #idDistrito="ngModel">
+                <mat-option *ngFor="let dist of distritos" [value]="dist.id">
+                    {{ dist.numero }}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="idDistrito.invalid && (idDistrito.touched || f.submitted)">
+                Seleccione un distrito
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Ración (int) -->
+    <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Ración</mat-label>
+            <input matInput type="number" name="racion" [(ngModel)]="model.racion" required min="0" step="1"
+                #racion="ngModel" />
+            <mat-error *ngIf="racion.errors?.['required'] && (racion.touched || f.submitted)">
+                La ración es obligatoria
+            </mat-error>
+            <mat-error *ngIf="racion.errors?.['min'] && (racion.touched || f.submitted)">
+                Debe ser un número ≥ 0
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <!-- Prepara (checkbox) -->
+    <div class="col-md-6 d-flex align-items-center">
+        <mat-checkbox name="prepara" [(ngModel)]="model.prepara">Prepara</mat-checkbox>
+    </div>
+
+    <!-- Prepara Day (opcional) -->
+    <div class="col-md-6" *ngIf="model.prepara">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Día de preparación</mat-label>
+            <input matInput name="prepara_Day" [(ngModel)]="model.prepara_Day" />
+        </mat-form-field>
+    </div>
+
+    <!-- Acciones -->
+    <div class="col-12 m-t-20 text-center">
+        <button mat-raised-button class="option-button" color="primary" type="submit" [disabled]="f.invalid">
+            Guardar
+        </button>
+    </div>
+
+
+
+</form>
+
+<ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }">
+</ngx-loading>

@@ -1,0 +1,11 @@
+::ng-deep .mat-mdc-checkbox .mdc-checkbox__background {
+  border: 1px solid rgba(0, 0, 0, 0.6); // 👈 borde gris
+  border-radius: 3px;                   // opcional
+}
+
+.option-button {
+    border: solid 1px;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+}
