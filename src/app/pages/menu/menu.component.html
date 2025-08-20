@@ -1,1 +1,110 @@
-<p>menu works!</p>
+<mat-card class="cardWithShadow full-width">
+    <mat-card-header>
+        <mat-card-title class="m-b-0">Menú Escolar</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="container mt-3 m-b-30">
+            <div class="row g-2">
+                <!-- Input -->
+                <div class="col-12 col-md-8">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Buscar</mat-label>
+                        <input (keyup)="applyFilter($event)" matInput placeholder="Escribe aquí..." />
+                    </mat-form-field>
+                </div>
+                <!-- Botón -->
+                <div class="col-12 col-md-4 d-flex align-items-start">
+                    <button mat-raised-button color="primary" class="option-button" (click)="addNewEvent()"
+                        [ngStyle]="addNewItem ? {'border': '2px solid red', 'color': 'red'} : {}">
+                        {{addNewItem ? 'Cancelar' : 'Agregar'}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-3 m-b-30" *ngIf="addNewItem">
+            <div class="row g-2">
+                <!-- SELECT DIAS -->
+                <div class="col-12 col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Día</mat-label>
+                        <mat-select name="diaid" [(ngModel)]="newItem.diaId" required #diaid="ngModel">
+                            <mat-option *ngFor="let loc of diasDisponibles" [value]="loc.id">
+                                {{ loc.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="diaid.invalid && diaid.touched">
+                            Seleccione un dia
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- SELECT ARTICULOS -->
+                <div class="col-12 col-md-4">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Artículo</mat-label>
+                        <mat-select name="articuloid" [(ngModel)]="newItem.articuloId" required #articuloid="ngModel">
+                            <mat-option *ngFor="let loc of articulos" [value]="loc.id">
+                                {{ loc.nombre }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="articuloid.invalid && articuloid.touched">
+                            Seleccione un artículo
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <!-- Botón -->
+                <div class="col-12 col-md-4 d-flex align-items-start">
+                    <button mat-raised-button color="primary" class="add-button" (click)="saveNewItem()">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
+
+                <!-- Nombre -->
+                <ng-container matColumnDef="dia">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Dia </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.dia }} </td>
+                </ng-container>
+
+                <!-- Dirección -->
+                <ng-container matColumnDef="articulo">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Articulo </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.articulo }} </td>
+                </ng-container>
+
+                <!-- Director -->
+                <ng-container matColumnDef="precio">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Precio </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.precio}} </td>
+                </ng-container>
+
+                <!-- Acción -->
+                <!-- <ng-container matColumnDef="accion">
+                    <th mat-header-cell *matHeaderCellDef class="text-center"> Acción </th>
+                    <td mat-cell *matCellDef="let element" class="text-center">
+                        <button mat-icon-button color="primary" matTooltip="Editar" (click)="editar(element)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="eliminar(element)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <!-- Header y filas -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5,10,25,50]">
+            </mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+<ngx-loading [show]="loading" [config]="{ fullScreenBackdrop: true }">
+</ngx-loading>

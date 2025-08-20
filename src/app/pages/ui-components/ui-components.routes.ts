@@ -11,6 +11,7 @@ import { AppTablesComponent } from './tables/tables.component';
 import { SchoolsComponent } from '../schools/schools.component';
 import { ConducesComponent } from '../conduces/conduces.component';
 import { MenuComponent } from '../menu/menu.component';
+import { BreakfastItemsComponent } from '../breakfast-items/breakfast-items.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -53,8 +54,12 @@ export const UiComponentsRoutes: Routes = [
         component: ConducesComponent,
       },
       {
-        path: 'menu-escolar',
+        path: 'school-menu',
         component: MenuComponent,
+      },
+      {
+        path: 'breakfast-items',
+        component: BreakfastItemsComponent,
       },
     ],
   },
