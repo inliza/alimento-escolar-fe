@@ -7,11 +7,11 @@
     <mat-sidenav #leftsidenav [mode]="isOver ? 'over' : 'side'" [opened]="!isOver"
       (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
       <div class="flex-layout">
-        <app-sidebar (toggleMobileNav)="sidenav.toggle()" [showToggle]="isOver"></app-sidebar>
+        <app-sidebar (toggleMobileNav)="toggleSidenav()" [showToggle]="isOver"></app-sidebar>
         <ng-scrollbar class="position-relative" style="height: 100%">
           <mat-nav-list class="sidebar-list">
             @for(item of navItems; track item) {
-            <app-nav-item [item]="item" (notify)="sidenav.toggle()">
+            <app-nav-item [item]="item" (notify)="toggleSidenav()">
             </app-nav-item>
             }
           </mat-nav-list>
@@ -43,8 +43,8 @@
       <!-- ============================================================== -->
       <!-- VerticalHeader -->
       <!-- ============================================================== -->
-      <!-- <app-header [showToggle]="!isOver" (toggleCollapsed)="toggleCollapsed()"
-        (toggleMobileNav)="sidenav.toggle()"></app-header> -->
+      <app-header [showToggle]="!isOver" (toggleCollapsed)="toggleCollapsed()"
+        (toggleMobileNav)="sidenav.toggle()"></app-header>
 
       <div class="body-wrapper">
         <main class="pageWrapper maxWidth">
@@ -53,9 +53,9 @@
         </main>
       </div>
 
-      <div class="p-16 p-t-8 p-b-30 text-center"> 
+      <!-- <div class="p-16 p-t-8 p-b-30 text-center"> 
         Design Developed by <a href="https://www.wrappixel.com/" target="_blank" class="text-decoration-none">WrapPixel.com</a>
-      </div>
+      </div> -->
 
     </mat-sidenav-content>
 

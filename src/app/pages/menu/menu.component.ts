@@ -8,6 +8,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { MaterialModule } from 'src/app/material.module';
 import { ItemsService } from 'src/app/services/items.service';
 import { MenuService } from 'src/app/services/menu.service';
+import { ToastService } from 'src/app/services/toast.service';
 import Swal from 'sweetalert2';
 
 export interface NewMenu {
@@ -45,7 +46,8 @@ export class MenuComponent implements OnInit {
 
   constructor(
     private service: MenuService,
-    private articulosService: ItemsService
+    private articulosService: ItemsService,
+    private readonly toast: ToastService,
 
   ) { }
 
@@ -74,15 +76,17 @@ export class MenuComponent implements OnInit {
       next: (res: any) => {
         console.log('Nuevo item guardado:', res);
         this.loading = false;
-
+        this.getAllDiasDisponibles();
         this.getAll();
-        this.addNewItem = false;
+        // this.addNewItem = false;
         this.newItem = { articuloId: 0, diaId: 0 };
-        Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'Menu guardado.',
-        });
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: '¡Éxito!',
+        //   text: 'Menu guardado.',
+        // });
+        this.toast.showToast('success', 'Menu guardado.', 'top-right');
+
       },
       error: (err) => {
 
@@ -96,6 +100,8 @@ export class MenuComponent implements OnInit {
     this.getAllDiasDisponibles();
     this.getAllArticulos();
     this.addNewItem = !this.addNewItem;
+    this.newItem = { articuloId: 0, diaId: 0 };
+
   }
 
   applyFilter(event: Event) {

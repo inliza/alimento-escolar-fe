@@ -54,7 +54,8 @@
                 </div>
                 <!-- Botón -->
                 <div class="col-12 col-md-4 d-flex align-items-start">
-                    <button mat-raised-button color="primary" class="add-button" (click)="saveNewItem()">
+                    <button [disabled]="newItem.articuloId ==0 || newItem.diaId == 0" mat-raised-button color="primary"
+                        class="add-button" (click)="saveNewItem()">
                         Guardar
                     </button>
                 </div>

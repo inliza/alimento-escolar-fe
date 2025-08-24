@@ -17,6 +17,11 @@ export class SchoolsModalComponent implements OnInit {
   loading = false;
   public editing = false;
 
+  diasPreparaList = [
+  { value: "6", label: 'Sábado' },
+  { value: "0", label: 'Domingo' }
+];
+
   constructor(
     private readonly service: SchoolService,
     public dialogRef: MatDialogRef<SchoolsModalComponent>,

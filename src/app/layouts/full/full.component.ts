@@ -88,11 +88,17 @@ export class FullComponent implements OnInit {
       });
   }
 
+  toggleSidenav() {
+    if (window.innerWidth <= 768) {
+      this.sidenav.toggle();
+    }
+  }
+
   ngOnInit(): void {
     if (this.userService.setLoginValue()) {
       this.userService.getLoggedRequest().subscribe((data) => {
       });
-    }else{
+    } else {
       this.userService.logout();
     };
   }

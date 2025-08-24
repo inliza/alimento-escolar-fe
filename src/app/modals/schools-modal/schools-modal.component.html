@@ -129,9 +129,17 @@
 
     <!-- Prepara Day (opcional) -->
     <div class="col-md-6" *ngIf="model.prepara">
-        <mat-form-field appearance="outline" class="w-100">
+        <!-- <mat-form-field appearance="outline" class="w-100">
             <mat-label>Día de preparación</mat-label>
             <input matInput name="prepara_Day" [(ngModel)]="model.prepara_Day" />
+        </mat-form-field> -->
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Día de prepara</mat-label>
+            <mat-select [(ngModel)]="model.prepara_Day" name="diaSemana">
+                <mat-option *ngFor="let dia of diasPreparaList" [value]="dia.value">
+                    {{ dia.label }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
 
