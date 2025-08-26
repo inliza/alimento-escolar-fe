@@ -39,13 +39,13 @@ export const navItems: NavItem[] = [
     route: '/ui-components/conduces-history',
     chip: true,
   },
-  {
-    displayName: 'Relacion de Conduces',
-    iconName: 'solar:calendar-mark-line-duotone',
-    route: 'https://materialm-angular-main.netlify.app/apps/calendar',
-    chip: true,
-    external: true,
-  },
+  // {
+  //   displayName: 'Relacion de Conduces',
+  //   iconName: 'solar:calendar-mark-line-duotone',
+  //   route: 'https://materialm-angular-main.netlify.app/apps/calendar',
+  //   chip: true,
+  //   external: true,
+  // },
   // {
   //   displayName: 'Email',
   //   iconName: 'solar:letter-line-duotone',
