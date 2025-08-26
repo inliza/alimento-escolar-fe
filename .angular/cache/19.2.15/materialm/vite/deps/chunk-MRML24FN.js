@@ -23,6 +23,9 @@ import {
   hasModifierKey
 } from "./chunk-MMVZ32PN.js";
 import {
+  BreakpointObserver
+} from "./chunk-4DDIENDC.js";
+import {
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader
 } from "./chunk-EZME2MXQ.js";
@@ -31,9 +34,6 @@ import {
   _getFocusedElementPierceShadowDom,
   _getShadowRoot
 } from "./chunk-MADP5KZN.js";
-import {
-  BreakpointObserver
-} from "./chunk-4DDIENDC.js";
 import {
   _CdkPrivateStyleLoader
 } from "./chunk-VW6LVMSL.js";
@@ -2916,4 +2916,4 @@ export {
   FOCUS_TRAP_INERT_STRATEGY,
   ConfigurableFocusTrapFactory
 };
-//# sourceMappingURL=chunk-FTFM4WHS.js.map
+//# sourceMappingURL=chunk-MRML24FN.js.map

@@ -1,16 +1,11 @@
 <mat-card class="cardWithShadow full-width">
     <mat-card-header>
-        <mat-card-title class="m-b-0">Generar Conduces</mat-card-title>
+        <mat-card-title class="m-b-0">Histórico de Conduces</mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <div class="container mt-3 m-b-30">
             <div class="row">
-                <div class="col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Código actual</mat-label>
-                        <input matInput name="codigoActual" [(ngModel)]="codigoActual" required />
-                    </mat-form-field>
-                </div>
+
                 <!-- SELECT Escuela -->
                 <div class="col-12 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
@@ -56,10 +51,6 @@
             <div class="row">
                 <!-- Botones a la izquierda -->
                 <div class="col-6 d-flex justify-content-start gap-2">
-                    <button *ngIf="conduces.length > 0" class="actions-button btn-save" mat-raised-button color="accent"
-                        (click)="guardar()">
-                        Guardar
-                    </button>
                     <button *ngIf="conduces.length > 0" class="actions-button btn-print" mat-raised-button color="warn"
                         (click)="imprimir()">
                         Imprimir
@@ -69,12 +60,14 @@
                 <!-- Botón a la derecha -->
                 <div class="col-6 d-flex justify-content-end">
                     <button mat-raised-button color="primary" class="option-button"
-                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate)" (click)="addConduces()">
-                        Agregar
+                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate)"
+                        (click)="getByDate()">
+                        Buscar
                     </button>
                 </div>
             </div>
         </div>
+
         <div class="table-responsive" *ngIf="dataSource && dataSource.data.length > 0">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 w-100">
 
@@ -122,7 +115,8 @@
 
                 <ng-container matColumnDef="fecha">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef class="col-small"> Fecha </th>
-                    <td mat-cell *matCellDef="let element" class="col-small"> {{ element.fecha | date:'dd/MM/yyyy' }} </td>
+                    <td mat-cell *matCellDef="let element" class="col-small"> {{ element.fecha | date:'dd/MM/yyyy' }}
+                    </td>
                 </ng-container>
 
                 <!-- Acción -->

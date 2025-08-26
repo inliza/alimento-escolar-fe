@@ -11,6 +11,12 @@ import {
   coerceArray
 } from "./chunk-DG6N4IH3.js";
 import {
+  _CdkPrivateStyleLoader
+} from "./chunk-VW6LVMSL.js";
+import {
+  _bindEventWithOptions
+} from "./chunk-AZ7WIFI6.js";
+import {
   CdkScrollable,
   CdkScrollableModule,
   ScrollDispatcher,
@@ -21,12 +27,6 @@ import "./chunk-2O4WY5GE.js";
 import {
   Directionality
 } from "./chunk-GWV6PTLK.js";
-import {
-  _CdkPrivateStyleLoader
-} from "./chunk-VW6LVMSL.js";
-import {
-  _bindEventWithOptions
-} from "./chunk-AZ7WIFI6.js";
 import {
   coerceElement,
   coerceNumberProperty
@@ -70,11 +70,11 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule
 } from "./chunk-YQC4FBSZ.js";
+import "./chunk-243NFYEQ.js";
 import {
   animationFrameScheduler,
   merge
 } from "./chunk-ZGR3XN7N.js";
-import "./chunk-243NFYEQ.js";
 import {
   BehaviorSubject,
   Observable,

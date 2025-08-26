@@ -45,6 +45,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: '',
+    component: BlankComponent,
+    children: [
+      {
+        path: 'print',
+        loadChildren: () => 
+          import('./components/print/print.routes').then((m)=> m.PrintRoutes)
+      }
+    ]
+  }
+  ,
+  {
     path: '**',
     redirectTo: 'authentication/error',
   },

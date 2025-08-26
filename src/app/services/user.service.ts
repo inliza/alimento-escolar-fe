@@ -63,6 +63,7 @@ export class UsersService {
 
   public logout() {
     localStorage.clear();
+    sessionStorage.clear();
     this.isUserBOLoggedIn = false;
     this.loggedUserSubject.next(null);
     this.router.navigate(['authentication/login']);

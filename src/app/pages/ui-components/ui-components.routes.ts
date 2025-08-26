@@ -12,6 +12,7 @@ import { SchoolsComponent } from '../schools/schools.component';
 import { ConducesComponent } from '../conduces/conduces.component';
 import { MenuComponent } from '../menu/menu.component';
 import { BreakfastItemsComponent } from '../breakfast-items/breakfast-items.component';
+import { ConducesHistoryComponent } from '../conduces-history/conduces-history.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -61,6 +62,10 @@ export const UiComponentsRoutes: Routes = [
         path: 'breakfast-items',
         component: BreakfastItemsComponent,
       },
+      {
+        path: 'conduces-history',
+        component: ConducesHistoryComponent
+      }
     ],
   },
 ];

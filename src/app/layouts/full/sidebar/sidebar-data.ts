@@ -34,11 +34,10 @@ export const navItems: NavItem[] = [
     navCap: 'Opciones',
   },
   {
-    displayName: 'Imprimir Conduce',
+    displayName: 'Histórico Conduce',
     iconName: 'solar:chat-round-line-line-duotone',
-    route: 'https://materialm-angular-main.netlify.app/apps/chat',
+    route: '/ui-components/conduces-history',
     chip: true,
-    external: true,
   },
   {
     displayName: 'Relacion de Conduces',

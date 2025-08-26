@@ -2,17 +2,23 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { E } from '@angular/material/error-options.d-CGdTZUYk';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { NgxLoadingModule } from 'ngx-loading';
+import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
 import { MaterialModule } from 'src/app/material.module';
+import { ConduceDesayunoService } from 'src/app/services/conduce.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { SchoolService } from 'src/app/services/schools.service';
 import Swal from 'sweetalert2';
 
 export interface Conduce {
+  id?:number,
   codigo: number;
   escuelaId: number;
   articuloId: number;
@@ -21,13 +27,13 @@ export interface Conduce {
   total: number;
   itbis: number;
   fecha: string;
-  articulo: string,
-  escuela: string
+  articulo: any,
+  escuela: any
 }
 
 @Component({
   selector: 'app-conduces',
-  imports: [MatListModule, MatCardModule, MatIconModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [MatListModule, MatCardModule, MatIconModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule, NgxLoadingModule],
   templateUrl: './conduces.component.html',
   styleUrl: './conduces.component.scss'
 })
@@ -45,7 +51,7 @@ export class ConducesComponent implements OnInit {
     'accion'
   ];
 
-  private loading = true;
+  loading = false;
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,7 +63,9 @@ export class ConducesComponent implements OnInit {
 
   constructor(
     private readonly schoolService: SchoolService,
-    private readonly menuService: MenuService
+    private readonly menuService: MenuService,
+    private readonly conduceService: ConduceDesayunoService,
+    private router: Router
   ) { }
 
 
@@ -75,13 +83,14 @@ export class ConducesComponent implements OnInit {
   }
   conduces: Conduce[] = [];
   escuelas: any[] = [];
-  codigoActual: number = 19000;
+  codigoActual: number = 0;
+  codigoInicial: number = 0;
   fechaHastaDate: Date | null = null;
   fechaHasta = false;
   monthMenu: any[] = [];
 
   ngOnInit(): void {
-    // Initialize or fetch data here
+    this.getNextConduce();
     this.getEscuelas();
     this.getMonthMenu();
   }
@@ -92,6 +101,13 @@ export class ConducesComponent implements OnInit {
       this.monthMenu = data.content;
     })
   }
+
+  getNextConduce() {
+    this.conduceService.getNextConduceNumber().subscribe((data: any) => {
+     this.codigoInicial = this.codigoActual = data.content.nextCode;
+    })
+  }
+
 
   getEscuelas() {
     this.schoolService.getAllByUser().subscribe({
@@ -105,6 +121,35 @@ export class ConducesComponent implements OnInit {
     });
   }
 
+  saveConduce$(): Observable<boolean> {
+    if (this.conduces.length === 0) {
+      return of(false);
+    }
+
+    this.loading = true;
+
+    return this.conduceService.bulkCreate(this.conduces).pipe(
+      map((res: any) => res?.code === 200),
+      tap((success) => {
+        // if (success) {
+        //   this.conduces = [];
+        //   this.ngOnInit();
+        // }
+        return success;
+      }),
+      catchError((err) => {
+        Swal.fire({
+          title: 'Atención',
+          text: err.error.message,
+        });
+        console.error(err);
+        return of(false);
+      }),
+      finalize(() => (this.loading = false)),
+    );
+  }
+
+
   get fechaMinimaHasta(): Date | null {
     if (!this.selectedDate) return null;
     const f = new Date(this.selectedDate);
@@ -112,52 +157,86 @@ export class ConducesComponent implements OnInit {
     return f;
   }
 
-eliminar(row: Conduce): void {
-  if (!this.conduces?.length) return;
+  eliminar(row: Conduce): void {
+    if (!this.conduces?.length) return;
 
-  // 1) Guarda el mínimo código ANTES de eliminar
-  const minCodeBefore = Math.min(...this.conduces.map(c => c.codigo));
+    // 1) Guarda el mínimo código ANTES de eliminar
+    const minCodeBefore = Math.min(...this.conduces.map(c => c.codigo));
 
-  // 2) Quita el item seleccionado
-  const idx = this.conduces.findIndex(c => c.codigo === row.codigo);
-  if (idx === -1) return;
-  this.conduces.splice(idx, 1);
+    // 2) Quita el item seleccionado
+    const idx = this.conduces.findIndex(c => c.codigo === row.codigo);
+    if (idx === -1) return;
+    this.conduces.splice(idx, 1);
 
-  // 3) Reindexa comenzando desde el mínimo que existía antes
-  if (this.conduces.length > 0) {
-    const sorted = this.conduces.slice().sort((a, b) => a.codigo - b.codigo);
+    // 3) Reindexa comenzando desde el mínimo que existía antes
+    if (this.conduces.length > 0) {
+      const sorted = this.conduces.slice().sort((a, b) => a.codigo - b.codigo);
 
-    sorted.forEach((c, i) => {
-      c.codigo = minCodeBefore + i; // ← arranca desde el antiguo mínimo
-    });
+      sorted.forEach((c, i) => {
+        c.codigo = minCodeBefore + i; // ← arranca desde el antiguo mínimo
+      });
 
-    this.conduces = sorted;
+      this.conduces = sorted;
 
-    // 4) Siguiente código disponible continúa la secuencia
-    this.codigoActual = minCodeBefore + this.conduces.length;
-  } else {
-    // Si ya no quedan, reinicia como prefieras
-    this.codigoActual = 19000; // o 1, o el que uses como base
+      // 4) Siguiente código disponible continúa la secuencia
+      this.codigoActual = minCodeBefore + this.conduces.length;
+    } else {
+      // Si ya no quedan, reinicia como prefieras
+      this.codigoActual = this.codigoInicial; // o 1, o el que uses como base
+    }
+
+    // 5) Refresca la tabla
+    this.dataSource.data = this.conduces;
   }
-
-  // 5) Refresca la tabla
-  this.dataSource.data = this.conduces;
-}
 
   editar(element: any) {
 
   }
 
   guardar() {
+    this.saveConduce$().subscribe((ok) => {
+      if (ok) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Conduces guardados existosamente',
+        });
+        this.getNextConduce();
+        this.getEscuelas();
+        this.getMonthMenu();
+        this.dataSource.data = this.conduces = [];
 
+      } else {
+
+      }
+    })
   }
 
-  imprimir() { }
+  imprimir() {
+    this.saveConduce$().subscribe((ok) => {
+      if (ok) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Éxito!',
+          text: 'Conduces guardados existosamente',
+        });
+        this.getNextConduce();
+        this.getEscuelas();
+        this.getMonthMenu();
+        sessionStorage.setItem('conduces_print', JSON.stringify(this.conduces));
+        window.open(this.router.serializeUrl(this.router.createUrlTree(['print/conduces'])), '_blank');
+        this.dataSource.data = this.conduces = [];
+
+      } else {
+
+      }
+    })
+
+  }
 
   // Acción del botón "Agregar"
   addConduces(): void {
 
-    debugger
     console.log(this.selectSchoolId);
     // Validaciones mínimas
     if (!this.selectedDate) {
@@ -177,15 +256,12 @@ eliminar(row: Conduce): void {
       toDate = tmp;
     }
 
-    console.log(this.escuelas);
-
 
     // Escuelas a usar
     const schoolsToUse: any[] = this.selectSchoolId == 0
       ? this.escuelas
       : this.escuelas.filter(e => e.id === this.selectSchoolId);
 
-    console.log(schoolsToUse);
     // Fechas a usar
     const days: Date[] = this.datesBetweenInclusive(fromDate, toDate);
 
@@ -207,12 +283,12 @@ eliminar(row: Conduce): void {
 
         //Condiciones para que si es finde y la escuela no es prepara, que siga
         //Tambien se valida que el dia de prepara de la escuela corresponda al dia en cuestion
-        if ((day.getDay() == 6 || day.getDay() == 0) &&( !school.prepara || day.getDay() != school.prepara_Day)) {
+        if ((day.getDay() == 6 || day.getDay() == 0) && (!school.prepara || day.getDay() != school.prepara_Day)) {
           continue;
-        } 
+        }
         // Calcula totales si quieres (aquí copiamos lo de newConduce)
         const cantidad = school.racion ?? 0;
-        const precio = articulo.precio;
+        const precio = parseFloat(articulo.precio);
         const itbis = articulo.itbis ? (cantidad * precio) * 0.18 : 0;
         const total = cantidad * precio;
 
@@ -225,8 +301,9 @@ eliminar(row: Conduce): void {
           precio,
           itbis,
           total,
-          articulo: articulo.nombre,
-          escuela: school.nombre
+          articuloId: articulo.id,
+          articulo: articulo,
+          escuela: school
         };
 
         nuevos.push(item);

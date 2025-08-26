@@ -1,0 +1,136 @@
+/* conduces-print.component.css */
+.print-container {
+    // padding: 0;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 18px;
+    // margin-top: 5px;
+}
+
+@page {
+    size: A4;
+    margin: 12mm;
+}
+
+.sheet {
+    page-break-after: always;
+}
+
+.sheet:last-child {
+    page-break-after: auto;
+}
+
+.hdr {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.hdr h2 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.hdr p {
+    margin: 5px 0;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.info {
+    margin-top: 30px;
+}
+
+.info .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    border-bottom: 1px solid #000;
+}
+
+.info-top .row {
+    // margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+}
+
+.title {
+    text-align: center;
+    margin: 30px 0 6px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.tbl th,
+.tbl td {
+    border: 1px solid #000;
+    padding: 6px;
+}
+
+.tbl th:last-child,
+.tbl td:last-child {
+    text-align: center;
+}
+
+.obs {
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+
+.obs .line {
+    margin-top: 6px;
+    border-bottom: 1px solid #000;
+    height: 18px;
+}
+
+.recibido {
+    width: 45%;
+    /* ajusta el bloque a la derecha */
+    margin-left: auto;
+    /* empuja hacia la derecha */
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    margin: 6px 0;
+}
+
+.field .label {
+    min-width: 120px;
+    /* ancho fijo para la etiqueta */
+}
+
+.field .line {
+    flex: 1;
+    /* ocupa todo el espacio restante */
+    border-bottom: 1px solid #000;
+    margin-left: 6px;
+}
+.firmas-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.col-left {
+  width: 50%;           /* ocupa la mitad izquierda de la hoja */
+  text-align: left;
+}
+
+.col-right {
+  width: 45%;           /* ocupa la mitad derecha (igual que .recibido) */
+  margin-left: auto;    /* alinea con el bloque de recibido */
+  text-align: left;    /* texto a la derecha dentro de ese bloque */
+}

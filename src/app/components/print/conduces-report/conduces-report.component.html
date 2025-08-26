@@ -1,0 +1,87 @@
+<!-- conduces-print.component.html -->
+<div class="print-container">
+    <section class="sheet" *ngFor="let c of conduces">
+        <header class="hdr">
+            <h1 style="font-weight:bolder; font-size: 30px;">{{company.name | uppercase}}</h1>
+            <h2 style="font-weight: 600;">{{company.address}}</h2>
+            <p>Tel. {{company.phone}}</p>
+            <p>RNC# {{company.rnc}}</p>
+        </header>
+
+        <div class="info-top">
+            <div class="row">
+                <span><b>FECHA:</b> {{ c.fecha | date:'dd/MM/yyyy' }}</span>
+                <span><b>CONDUCE NO:</b> {{ c.codigoConduce || c.codigo }}</span>
+            </div>
+        </div>
+
+
+        <div class="info">
+            <div class="row">
+                <span><b>CENTRO EDUCATIVO:</b> {{ c.escuela?.nombre || c.escuela }}</span>
+                <span><b>CÓDIGO:</b> {{ c.escuela?.codigoEscuela }}</span>
+            </div>
+            <div class="row">
+                <span><b>DIRECTOR:</b> {{ c.escuela?.director }}</span>
+                <span><b>TELÉFONO:</b> {{ c.escuela?.telefono }}</span>
+            </div>
+            <div class="row"><span><b>DIRECCIÓN:</b> {{ c.escuela?.direccion }}</span></div>
+            <div class="row">
+                <span><b>LOCALIDAD:</b> {{ c.escuela?.localidad?.nombre }}</span>
+                <span><b>REGIONAL/DISTRITO:</b> {{ c.escuela?.distrito?.numero }}</span>
+            </div>
+        </div>
+
+        <h4 class="title">(DETALLE DE LAS RACIONES ENTREGADAS Y RECIBIDAS)</h4>
+        <table class="tbl">
+            <thead>
+                <tr>
+                    <th>DESCRIPCIÓN DEL PRODUCTO</th>
+                    <th style="width:110px">CANTIDAD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si tu conduce trae un solo artículo: -->
+                <tr>
+                    <td>{{ c.articulo?.nombre || c.articulo }}</td>
+                    <td class="center">{{ c.cantidad | number:'1.0-0' }}</td>
+                </tr>
+                <!-- Si tiene varios detalles, reemplaza por *ngFor="let d of c.detalles" -->
+            </tbody>
+        </table>
+
+        <div class="obs">
+            <b>OBSERVACIÓN:</b>
+            <div class="line"></div>
+        </div>
+
+        <div class="recibido">
+            <div class="field"><strong>RECIBIDO POR:</strong></div>
+            <div class="field">
+                <span class="label">NOMBRE:</span>
+                <span class="line"></span>
+            </div>
+            <div class="field">
+                <span class="label">FIRMA:</span>
+                <span class="line"></span>
+            </div>
+            <div class="field">
+                <span class="label">FECHA RECEPCIÓN:</span>
+                <span class="line"></span>
+            </div>
+            <div class="field">
+                <span class="label">HORA RECEPCIÓN:</span>
+                <span class="line"></span>
+            </div>
+        </div>
+        <div class="firmas-row">
+            <div class="col-left">
+                <b>FIRMA Y SELLO DEL SUPLIDOR</b>
+            </div>
+            <div class="col-right">
+                <b>SELLO DEL CENTRO</b>
+            </div>
+        </div>
+
+    </section>
+</div>

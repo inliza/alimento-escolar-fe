@@ -2,3 +2,22 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&display=swap');
+
+.logo-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 600;         /* bien bold */
+  letter-spacing: 3px;      /* aire entre letras */
+  text-transform: uppercase;
+
+  /* Gradiente celeste -> blanco para resaltar en fondo azul */
+  background: linear-gradient(90deg, #00d4ff, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Sombra suave para contraste */
+  text-shadow: 2px 2px 6px rgba(0, 0, 50, 0.4);
+}
