@@ -49,7 +49,9 @@ export class SchoolsModalComponent implements OnInit {
     tipoEscuela: '',
     deleted: false,
     prepara: false,
-    prepara_Day: ''
+    prepara_Day: '',
+    idProvincia: null as number | null,
+
   };
 
   ngOnInit(): void {
@@ -78,13 +80,14 @@ export class SchoolsModalComponent implements OnInit {
           tipoEscuela: school.tipoEscuela,
           deleted: school.deleted,
           prepara: school.prepara,
-          prepara_Day: school.prepara_Day
+          prepara_Day: school.prepara_Day,
+          idProvincia: school.localidad.idprovincia,
         };
         if (school.idLocalidad) {
-          this.getLocalidades(school.idLocalidad);
+          this.getLocalidades(school.localidad.idprovincia);
         }
         if (school.idDistrito) {
-          this.getDistritos(school.idDistrito);
+          this.getDistritos(school.distrito.idprovincia);
         }
       }
       this.loading = false;

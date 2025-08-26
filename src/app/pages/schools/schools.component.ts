@@ -32,8 +32,12 @@ export class SchoolsComponent implements OnInit {
   private loading = true;
 
   dataSource = new MatTableDataSource<any>([]);
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) set matPaginator(p: MatPaginator) {
+    if (p) this.dataSource.paginator = p;
+  }
+  @ViewChild(MatSort) set matSort(s: MatSort) {
+    if (s) this.dataSource.sort = s;
+  }
 
   constructor(
     private dialog: MatDialog,

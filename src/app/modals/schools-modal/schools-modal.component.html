@@ -64,13 +64,13 @@
     <div class="col-md-6">
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Provincia</mat-label>
-            <mat-select name="idprovincia" [(ngModel)]="model.idLocalidad" required #idLocalidad="ngModel"
+            <mat-select name="idprovincia" [(ngModel)]="model.idProvincia" required #idprovincia="ngModel"
                 (selectionChange)="onProvinciaChange($event)">
                 <mat-option *ngFor="let loc of provincias" [value]="loc.id">
                     {{ loc.nombre }}
                 </mat-option>
             </mat-select>
-            <mat-error *ngIf="idLocalidad.invalid && (idLocalidad.touched || f.submitted)">
+            <mat-error *ngIf="idprovincia.invalid && (idprovincia.touched || f.submitted)">
                 Seleccione una provincia
             </mat-error>
         </mat-form-field>

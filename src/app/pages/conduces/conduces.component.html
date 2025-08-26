@@ -69,7 +69,7 @@
                 <!-- Botón a la derecha -->
                 <div class="col-6 d-flex justify-content-end">
                     <button mat-raised-button color="primary" class="option-button"
-                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate)" (click)="addConduces()">
+                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate) || escuelas.length === 0" (click)="addConduces()">
                         Agregar
                     </button>
                 </div>
