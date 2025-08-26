@@ -1,8 +1,8 @@
 export class Globals {
     a = {
-        Produccion: "Inserta la url de prod aqui",
+        Produccion: "https://alimento-escolar-be-dev.up.railway.app/api/",
         API: `http://localhost:3888/api/`,
     };
-    public urlApi = this.a["API"];
+    public urlApi = this.a["Produccion"];
 
 }

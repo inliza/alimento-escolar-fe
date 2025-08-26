@@ -18,7 +18,7 @@ export class AppTopstripComponent implements OnInit {
 
     ngOnInit(): void {
         this.userService.loggedUser$.subscribe((data=> {
-            this.company = data?.content?.company?.owner;
+            this.company = data?.content?.company?.alias;
         }));
     }
 }
