@@ -20,6 +20,7 @@ export class ConducesReportComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     const raw = sessionStorage.getItem('conduces_print');
     this.conduces = raw ? JSON.parse(raw) : [];
+    console.log(this.conduces);
     this.service.getLoggedRequest().subscribe((data:any)=>{
       this.company = data.content.company;
     })
