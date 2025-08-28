@@ -3,7 +3,7 @@ import {
 } from "./chunk-HSLRNC5F.js";
 import {
   MatCommonModule
-} from "./chunk-G4YLOGNC.js";
+} from "./chunk-VAMHMH56.js";
 import {
   NgModule,
   setClassMetadata,
@@ -38,4 +38,4 @@ var MatPseudoCheckboxModule = class _MatPseudoCheckboxModule {
 export {
   MatPseudoCheckboxModule
 };
-//# sourceMappingURL=chunk-6TZ5YFRD.js.map
+//# sourceMappingURL=chunk-T53GXLSK.js.map

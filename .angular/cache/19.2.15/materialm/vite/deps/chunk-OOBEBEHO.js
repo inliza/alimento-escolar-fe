@@ -299,6 +299,7 @@ function getMultipleValuesInSingleSelectionError() {
 export {
   UniqueSelectionDispatcher,
   _DisposeViewRepeaterStrategy,
-  SelectionModel
+  SelectionModel,
+  getMultipleValuesInSingleSelectionError
 };
-//# sourceMappingURL=chunk-Q73NTYFG.js.map
+//# sourceMappingURL=chunk-OOBEBEHO.js.map

@@ -24,10 +24,13 @@ export class ConduceDesayunoService {
         return this.http.post<any>(urlAPI, conduces);
     }
 
-    getByDate(from: string, to?: string): Observable<any> {
+    getByDate(schoolId: number, from: string, to?: string): Observable<any> {
 
         let params = new HttpParams()
             .set('from', from);
+
+        params = params.set('schoolId', schoolId);
+
         if (to) params = params.set('to', to);
 
         const urlAPI = this.globals.urlApi + `conduces-desayuno/by-date`;

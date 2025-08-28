@@ -10,18 +10,11 @@ import {
   coerceCssPixelValue
 } from "./chunk-GV5LUSDY.js";
 import {
-  ESCAPE,
-  hasModifierKey
-} from "./chunk-MMVZ32PN.js";
-import {
   _IdGenerator
 } from "./chunk-EZME2MXQ.js";
 import {
   _getEventTarget
 } from "./chunk-MADP5KZN.js";
-import {
-  coerceArray
-} from "./chunk-DG6N4IH3.js";
 import {
   _CdkPrivateStyleLoader
 } from "./chunk-VW6LVMSL.js";
@@ -29,10 +22,17 @@ import {
   _bindEventWithOptions
 } from "./chunk-AZ7WIFI6.js";
 import {
+  coerceArray
+} from "./chunk-DG6N4IH3.js";
+import {
+  ESCAPE,
+  hasModifierKey
+} from "./chunk-MMVZ32PN.js";
+import {
   ScrollDispatcher,
   ScrollingModule,
   ViewportRuler
-} from "./chunk-LEB5QCKT.js";
+} from "./chunk-AKQZ6VNJ.js";
 import {
   supportsScrollBehavior
 } from "./chunk-2O4WY5GE.js";
@@ -2905,4 +2905,4 @@ export {
   CdkConnectedOverlay,
   OverlayModule
 };
-//# sourceMappingURL=chunk-4BHLMSXY.js.map
+//# sourceMappingURL=chunk-H23ZAWOH.js.map

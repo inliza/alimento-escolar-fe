@@ -2,6 +2,24 @@ import {
   normalizePassiveListenerOptions
 } from "./chunk-TLKLTHLA.js";
 import {
+  isFakeMousedownFromScreenReader,
+  isFakeTouchstartFromScreenReader
+} from "./chunk-EZME2MXQ.js";
+import {
+  _getEventTarget,
+  _getFocusedElementPierceShadowDom,
+  _getShadowRoot
+} from "./chunk-MADP5KZN.js";
+import {
+  _CdkPrivateStyleLoader
+} from "./chunk-VW6LVMSL.js";
+import {
+  _bindEventWithOptions
+} from "./chunk-AZ7WIFI6.js";
+import {
+  BreakpointObserver
+} from "./chunk-4DDIENDC.js";
+import {
   A,
   ALT,
   CONTROL,
@@ -22,24 +40,6 @@ import {
   ZERO,
   hasModifierKey
 } from "./chunk-MMVZ32PN.js";
-import {
-  BreakpointObserver
-} from "./chunk-4DDIENDC.js";
-import {
-  isFakeMousedownFromScreenReader,
-  isFakeTouchstartFromScreenReader
-} from "./chunk-EZME2MXQ.js";
-import {
-  _getEventTarget,
-  _getFocusedElementPierceShadowDom,
-  _getShadowRoot
-} from "./chunk-MADP5KZN.js";
-import {
-  _CdkPrivateStyleLoader
-} from "./chunk-VW6LVMSL.js";
-import {
-  _bindEventWithOptions
-} from "./chunk-AZ7WIFI6.js";
 import {
   coerceElement,
   coerceNumberProperty
@@ -2916,4 +2916,4 @@ export {
   FOCUS_TRAP_INERT_STRATEGY,
   ConfigurableFocusTrapFactory
 };
-//# sourceMappingURL=chunk-MRML24FN.js.map
+//# sourceMappingURL=chunk-7VVSJ33K.js.map

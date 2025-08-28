@@ -11,6 +11,7 @@ import { ConduceDesayunoService } from 'src/app/services/conduce.service';
 import { Router } from '@angular/router';
 import { NgxLoadingModule } from 'ngx-loading';
 import Swal from 'sweetalert2';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-conduces-history',
@@ -21,6 +22,7 @@ import Swal from 'sweetalert2';
 export class ConducesHistoryComponent implements OnInit {
 
   displayedColumns: string[] = [
+    'select',
     'codigo',
     'escuela',
     'articulo',
@@ -31,6 +33,8 @@ export class ConducesHistoryComponent implements OnInit {
     'fecha',
     'accion'
   ];
+
+  selection = new SelectionModel<any>(true, []); // multiselección
 
   loading = false;
   dataSource = new MatTableDataSource<any>([]);
@@ -75,7 +79,7 @@ export class ConducesHistoryComponent implements OnInit {
 
   getByDate() {
     this.loading = true;
-    this.conduceService.getByDate(this.toYYYYMMDD(this.selectedDate), this.fechaHasta ? this.toYYYYMMDD(this.fechaHastaDate) : undefined).subscribe((data: any) => {
+    this.conduceService.getByDate(this.selectSchoolId ?? 0, this.toYYYYMMDD(this.selectedDate), this.fechaHasta ? this.toYYYYMMDD(this.fechaHastaDate) : undefined).subscribe((data: any) => {
       this.loading = false;
       this.dataSource.data = this.conduces = data.content.map((c: any) => ({
         id: c.id,
@@ -103,53 +107,63 @@ export class ConducesHistoryComponent implements OnInit {
 
 
   eliminar(element: any) {
-        console.log('Eliminar', element);
-        Swal.fire({
-          icon: 'warning',
-          title: `Atención`,
-          text: `¿Está seguro que desea el conduce ${element.codigo}?`,
-          confirmButtonText: 'Si',
-          showCancelButton: true,
-          cancelButtonText: 'No',
-          customClass: {
-            confirmButton: 'my-confirm-button'
-          }
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.conduceService.delete(element.id).subscribe({
-              next: (res) => {
-                console.log('Conduce eliminado con éxito:', res);
-                Swal.fire({
-                  icon: 'success',
-                  title: '¡Éxito!',
-                  text: 'Conduce eliminado correctamente.',
-                });
-                this.getByDate();
-              },
-              error: (err) => {
-                console.error('Error al eliminar el Conduce:', err);
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Error',
-                  text: 'Hubo un problema al eliminar el conduce. Inténtelo de nuevo.',
-                });
-              }
+    console.log('Eliminar', element);
+    Swal.fire({
+      icon: 'warning',
+      title: `Atención`,
+      text: `¿Está seguro que desea el conduce ${element.codigo}?`,
+      confirmButtonText: 'Si',
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      customClass: {
+        confirmButton: 'my-confirm-button'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.conduceService.delete(element.id).subscribe({
+          next: (res) => {
+            console.log('Conduce eliminado con éxito:', res);
+            Swal.fire({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'Conduce eliminado correctamente.',
+            });
+            this.getByDate();
+          },
+          error: (err) => {
+            console.error('Error al eliminar el Conduce:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Hubo un problema al eliminar el conduce. Inténtelo de nuevo.',
             });
           }
         });
+      }
+    });
+  }
+
+  isAllSelected(): boolean {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numRows > 0 && numSelected === numRows;
+  }
+
+  masterToggle(): void {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   imprimir() {
-    sessionStorage.setItem('conduces_print', JSON.stringify(this.conduces));
+     const seleccionados = this.selection.selected.length
+    ? this.selection.selected
+    : this.dataSource.data;
+
+    sessionStorage.setItem('conduces_print', JSON.stringify(seleccionados));
     window.open(this.router.serializeUrl(this.router.createUrlTree(['print/conduces'])), '_blank');
 
   }
-
-  addConduces() {
-
-  }
-
-
 
   get fechaMinimaHasta(): Date | null {
     if (!this.selectedDate) return null;
