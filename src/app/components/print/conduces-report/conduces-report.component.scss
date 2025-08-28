@@ -4,8 +4,8 @@
     color: #000;
     font-family: Arial, sans-serif;
     font-size: 16px;
-    padding: 20px;
-    margin-top: 13px;
+    padding: 16px;
+    margin-top: 12px;
 }
 
 @page {
@@ -116,21 +116,26 @@
     border-bottom: 1px solid #000;
     margin-left: 6px;
 }
+
 .firmas-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 45px;
-  font-size: 16px;
-  font-style: italic;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 45px;
+    font-size: 16px;
+    font-style: italic;
 }
 
 .col-left {
-  width: 50%;           /* ocupa la mitad izquierda de la hoja */
-  text-align: left;
+    width: 50%;
+    /* ocupa la mitad izquierda de la hoja */
+    text-align: left;
 }
 
 .col-right {
-  width: 45%;           /* ocupa la mitad derecha (igual que .recibido) */
-  margin-left: auto;    /* alinea con el bloque de recibido */
-  text-align: left;    /* texto a la derecha dentro de ese bloque */
+    width: 45%;
+    /* ocupa la mitad derecha (igual que .recibido) */
+    margin-left: auto;
+    /* alinea con el bloque de recibido */
+    text-align: left;
+    /* texto a la derecha dentro de ese bloque */
 }
