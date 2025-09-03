@@ -35,8 +35,14 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Histórico Conduce',
-    iconName: 'solar:chat-round-line-line-duotone',
+    iconName: 'icon-park-outline:history-query',
     route: '/ui-components/conduces-history',
+    chip: true,
+  },
+    {
+    displayName: 'Reportes',
+    iconName: 'solar:bill-list-outline',
+    route: '/ui-components/conduces-report',
     chip: true,
   },
   // {

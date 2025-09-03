@@ -1,0 +1,99 @@
+<div class="page">
+    <header class="hdr">
+        <h1 style="font-weight:bolder; font-size: 26px;">{{company.name | uppercase}}</h1>
+        <h2 style="font-weight: 600;">{{company.address}}</h2>
+        <div class="sub">Tel. {{ company?.phone }} &nbsp;&nbsp; RNC# {{ company?.rnc }}</div>
+
+
+        <div class="title-row">
+            <div class="title-left">RELACIÓN DE CONDUCE GENERAL</div>
+            <div class="title-right" *ngIf="rightLabel">{{ rightLabel }}</div>
+        </div>
+    </header>
+
+    <main>
+        <table class="tbl">
+            <colgroup>
+                <col style="width:18mm" /> <!-- FECHA -->
+                <col style="width:18mm" /> <!-- NO. CONDUCE -->
+                <col style="width:17mm" /> <!-- CÓDIGO -->
+                <col /> <!-- NOMBRE (toma el resto) -->
+                <col style="width:18mm" /> <!-- PANES -->
+                <col style="width:19mm" /> <!-- GALLETAS -->
+                <col style="width:19mm" /> <!-- BIZCOCHOS -->
+                <col style="width:18mm" /> <!-- PAN VEG. -->
+            </colgroup>
+
+            <thead>
+                <tr class="head-top"></tr>
+                <tr>
+                    <th class="c-fecha">FECHA</th>
+                    <th class="c-num">NO. CONDUCE</th>
+                    <th class="c-cod">CÓDIGO CENTRO</th>
+                    <th class="c-nom">NOMBRE DEL CENTRO EDUCATIVO</th>
+                    <th class="c-qty-pan" style="text-align: center; font-size: 11px;">CANTIDAD<br>PANES</th>
+                    <th class="c-qty" style="text-align: center; font-size: 11px;">CANTIDAD<br>GALLETAS</th>
+                    <th class="c-qty" style="text-align: center; font-size: 11px;">CANTIDAD<br>BIZCOCHOS</th>
+                    <th class="c-qty-pan" style="text-align: center; font-size: 11px;">CANTIDAD<br>PAN VEG.</th>
+                </tr>
+                <tr class="head-bottom"></tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of filas">
+                    <td class="c-fecha">{{ fmtFecha(r.fecha) }}</td>
+                    <td class="c-num">{{ r.numeroConduce }}</td>
+                    <td class="c-cod">{{ r.codigoEscuela }}</td>
+                    <td class="c-nom">{{ r.nombreEscuela }}</td>
+                    <td class="c-qty">{{ fmtInt(r.a1) }}</td>
+                    <td class="c-qty">{{ fmtInt(r.a2) }}</td>
+                    <td class="c-qty">{{ fmtInt(r.a3) }}</td>
+                    <td class="c-qty">{{ fmtInt(r.a4) }}</td>
+                </tr>
+            </tbody>
+
+            <!-- <tfoot>
+                <tr class="foot-top"></tr>
+                <tr>
+                    <td class="total-label" colspan="4">TOTALES</td>
+                    <td class="c-qty total">{{ fmtInt(totales.panes) }}</td>
+                    <td class="c-qty total">{{ fmtInt(totales.galletas) }}</td>
+                    <td class="c-qty total">{{ fmtInt(totales.bizcochos) }}</td>
+                    <td class="c-qty total">{{ fmtInt(totales.panVeg) }}</td>
+                </tr>
+                <tr class="foot-bottom"></tr>
+            </tfoot> -->
+        </table>
+        <!-- Resumen final (estilo Crystal Reports) -->
+        <div class="resume">
+            <div class="resume-left">
+                <span class="resume-left-label">TOTAL</span>
+                <span class="resume-left-value">{{ fmtInt(totalFilas) }}</span>
+            </div>
+
+            <div class="resume-right">
+                <div class="rline">
+                    <span class="label">PANES</span>
+                    <span class="value">{{ fmtInt(totales.panes) }}</span>
+                </div>
+                <div class="rline">
+                    <span class="label">GALLETAS NUTRITIVAS</span>
+                    <span class="value">{{ fmtInt(totales.galletas) }}</span>
+                </div>
+                <div class="rline">
+                    <span class="label">BIZCOCHOS</span>
+                    <span class="value">{{ fmtInt(totales.bizcochos) }}</span>
+                </div>
+                <div class="rline">
+                    <span class="label">PAN DE VEGETALES</span>
+                    <span class="value">{{ fmtInt(totales.panVeg) }}</span>
+                </div>
+
+                <div class="rline grand">
+                    <span class="label">&nbsp;</span>
+                    <span class="value">{{ fmtInt(granTotal) }}</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

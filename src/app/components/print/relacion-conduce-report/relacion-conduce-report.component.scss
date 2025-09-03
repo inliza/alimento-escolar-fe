@@ -1,0 +1,239 @@
+/* Página y tipografía */
+@page {
+    size: Letter;
+    margin: 12mm;
+}
+
+.page {
+    color: #000;
+    font-family: "Times New Roman", Georgia, serif;
+    font-size: 12px;
+}
+
+/* Encabezado */
+.hdr {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.hdr h2 {
+    margin-top: 6px;
+    font-size: 20px;
+}
+
+.empresa {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sub {
+    margin: 6px 0 0;
+    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 600;
+    // margin-top: 6px;
+
+}
+
+.title-row {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.title-left {
+    text-align: left;
+    font-style: italic;
+}
+
+.title-right {
+    text-align: right;
+    white-space: nowrap;
+}
+
+// .titulo {
+//     margin-top: 8px;
+//     font-weight: 700;
+//     font-size: 14px;
+// }
+
+// .titulo .mes {
+//     font-weight: 400;
+//     font-size: 13px;
+// }
+
+/* Tabla */
+.tbl {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Repetir thead y tfoot en cada página impresa */
+table {
+    page-break-inside: auto;
+}
+
+thead {
+    display: table-header-group;
+}
+
+tfoot {
+    display: table-row-group;
+}
+
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+/* “Bordes” tipo reporte (líneas gruesas arriba/abajo) */
+.head-top td,
+.head-top th,
+.foot-bottom td,
+.foot-bottom th {
+    border: 0;
+    height: 2px;
+    background: #000;
+    padding: 0;
+}
+
+.head-bottom td,
+.head-bottom th,
+.foot-top td,
+.foot-top th {
+    border: 0;
+    height: 1px;
+    background: #000;
+    padding: 0;
+}
+
+/* Celdas */
+.tbl th,
+.tbl td {
+    border: 1px solid #000;
+    padding: 4px 4px;
+    /* antes 6px */
+    vertical-align: middle;
+}
+
+.tbl th {
+    text-align: center;
+    font-weight: 700;
+}
+
+.c-fecha {
+    width: 20mm;
+    text-align: center;
+}
+
+/* antes 22mm */
+.c-num {
+    width: 18mm;
+    text-align: center;
+}
+
+/* antes 22mm */
+.c-cod {
+    width: 17mm;
+    text-align: center;
+}
+
+/* Cantidades: bien angostas (números de 4–5 cifras) */
+.c-qty {
+    width: 19mm;
+    text-align: right;
+}
+
+.c-qty-pan {
+    width: 18mm;
+    text-align: right;
+}
+
+/* antes 22mm */
+
+/* La de nombre queda con todo el espacio restante */
+.c-nom {
+    /* sin width para que tome el resto */
+    white-space: normal;
+    /* permite que parta línea */
+    word-break: break-word;
+    /* rompe palabras largas si hace falta */
+}
+
+/* Bloque de resumen final */
+.resume {
+    margin-top: 8mm;
+    /* separa la tabla del resumen */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Lado izquierdo: "TOTAL 394" */
+.resume-left {
+    font-weight: 700;
+    font-size: 12px;
+    display: inline-flex;
+    gap: 6px;
+    align-items: baseline;
+}
+
+.resume-left-label {
+    text-transform: uppercase;
+}
+
+.resume-left-value {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Lado derecho: totales por artículo */
+.resume-right {
+    min-width: 60mm;
+    /* ancho fijo similar a la captura */
+    margin-left: auto;
+    /* pegado a la derecha */
+}
+
+.rline {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10mm;
+    line-height: 1.2;
+    padding: 2px 0;
+    font-variant-numeric: tabular-nums;
+    /* columnas numéricas alineadas */
+}
+
+.rline .label {
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+.rline .value {
+    min-width: 28mm;
+    /* columna numérica estable */
+    text-align: right;
+}
+
+/* Gran total (última línea), más destacado */
+.rline.grand {
+    border-top: 1px solid #000;
+    margin-top: 2mm;
+    padding-top: 2mm;
+    font-weight: 700;
+}
+
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}

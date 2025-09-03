@@ -1,0 +1,14 @@
+.example-tab-icon {
+  margin-right: 8px;
+}
+
+:host ::ng-deep .mat-mdc-card > .mat-mdc-card-content {
+  padding: 0 10px !important;
+}
+
+.option-button {
+    border: solid 1px;
+    width: 130px;
+    height: 40px;
+    border-radius: 5px;
+}

@@ -47,4 +47,17 @@ export class ConduceDesayunoService {
         return this.http.get<any>(urlAPI);
     }
 
+    getRelacionConduce(schoolId: number, from: string, to?: string): Observable<any> {
+        let params = new HttpParams()
+            .set('from', from);
+
+        if (to) params = params.set('to', to);
+
+        params = params.set('schoolId', schoolId);
+
+
+        const urlAPI = this.globals.urlApi + `conduces-desayuno/relacion`;
+        return this.http.get<any>(urlAPI, { params });
+    }
+
 }
