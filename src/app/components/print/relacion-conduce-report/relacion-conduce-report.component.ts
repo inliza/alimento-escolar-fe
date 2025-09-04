@@ -106,8 +106,18 @@ export class RelacionConduceReportComponent implements OnInit, AfterViewInit {
   }
 
   fmtFecha(v: string | Date) {
-    try { return new Date(v).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }); }
-    catch { return String(v); }
+    try {
+      if (typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)) {
+        // Descompone YYYY-MM-DD y crea un Date local
+        const [y, m, d] = v.split('-').map(Number);
+        const date = new Date(y, m - 1, d); // <-- sin zona horaria
+        return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      }
+      return new Date(v).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    } catch {
+      return String(v);
+    }
   }
+
   fmtInt(n?: number) { return Number(n ?? 0).toLocaleString('es-DO', { maximumFractionDigits: 0 }); }
 }
