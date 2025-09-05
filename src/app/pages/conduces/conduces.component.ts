@@ -320,6 +320,11 @@ export class ConducesComponent implements OnInit {
         if ((day.getDay() == 6 || day.getDay() == 0) && (!school.prepara || day.getDay() != school.prepara_Day)) {
           continue;
         }
+
+        //Si es prepara y no es finde, que siga
+        if(school.prepara && day.getDay() != 6 && day.getDay() != 0){
+          continue;
+        }
         // Calcula totales si quieres (aquí copiamos lo de newConduce)
         const cantidad = school.racion ?? 0;
         const precio = parseFloat(articulo.precio);
