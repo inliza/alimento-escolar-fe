@@ -51,16 +51,38 @@
             <div class="row">
                 <!-- Botones a la izquierda -->
                 <div class="col-6 d-flex justify-content-start gap-2">
-                    <button *ngIf="conduces.length > 0" class="actions-button btn-print" mat-raised-button color="warn"
-                        (click)="imprimir()">
+                    <button *ngIf="conduces.length > 0 && !editing" class="actions-button btn-print" mat-raised-button
+                        color="warn" (click)="imprimir()">
                         Imprimir
+                    </button>
+
+                    <!-- *ngIf="conduces.length > 0 && selection.hasValue()" -->
+                    <button *ngIf="false" class="actions-button btn-edit"
+                        mat-raised-button color="warn" (click)="editar()">
+                        {{editing ? 'Cancelar' : 'Editar'}}
+                    </button>
+
+                    <button mat-raised-button color="warn" *ngIf="editing === true && selection.hasValue()"
+                        class="actions-button btn-save">
+                        Guardar
                     </button>
                 </div>
 
                 <!-- Botón a la derecha -->
                 <div class="col-6 d-flex justify-content-end">
+                    <mat-form-field appearance="outline" class="w-100" *ngIf="editing === true && selection.hasValue()">
+                        <mat-label>Artículo</mat-label>
+                        <mat-select name="articuloid" [(ngModel)]="articuloId" required #articuloid="ngModel">
+                            <mat-option *ngFor="let loc of articulos" [value]="loc">
+                                {{ loc.nombre }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="articuloid.invalid && articuloid.touched">
+                            Seleccione un artículo
+                        </mat-error>
+                    </mat-form-field>
                     <button mat-raised-button color="primary" class="option-button"
-                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate)"
+                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate) || editing"
                         (click)="getByDate()">
                         Buscar
                     </button>
@@ -147,7 +169,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-              <mat-paginator [length]="dataSource.data.length" [pageSize]="25" [pageSizeOptions]="[5,10,25,50]">
+            <mat-paginator [length]="dataSource.data.length" [pageSize]="25" [pageSizeOptions]="[5,10,25,50]">
             </mat-paginator>
         </div>
     </mat-card-content>

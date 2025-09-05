@@ -13,12 +13,13 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { catchError, finalize, map, Observable, of, tap } from 'rxjs';
 import { MaterialModule } from 'src/app/material.module';
 import { ConduceDesayunoService } from 'src/app/services/conduce.service';
+import { ItemsService } from 'src/app/services/items.service';
 import { MenuService } from 'src/app/services/menu.service';
 import { SchoolService } from 'src/app/services/schools.service';
 import Swal from 'sweetalert2';
 
 export interface Conduce {
-  id?:number,
+  id?: number,
   codigo: number;
   escuelaId: number;
   articuloId: number;
@@ -65,6 +66,7 @@ export class ConducesComponent implements OnInit {
     private readonly schoolService: SchoolService,
     private readonly menuService: MenuService,
     private readonly conduceService: ConduceDesayunoService,
+    private articulosService: ItemsService,
     private router: Router
   ) { }
 
@@ -87,6 +89,9 @@ export class ConducesComponent implements OnInit {
   codigoInicial: number = 0;
   fechaHastaDate: Date | null = null;
   fechaHasta = false;
+  selectArticulo = false;
+  articuloId: any | null = null;
+  articulos: any[] = [];
   monthMenu: any[] = [];
 
   ngOnInit(): void {
@@ -104,7 +109,7 @@ export class ConducesComponent implements OnInit {
 
   getNextConduce() {
     this.conduceService.getNextConduceNumber().subscribe((data: any) => {
-     this.codigoInicial = this.codigoActual = data.content.nextCode;
+      this.codigoInicial = this.codigoActual = data.content.nextCode;
     })
   }
 
@@ -193,6 +198,28 @@ export class ConducesComponent implements OnInit {
 
   }
 
+  onArticuloChange(event: any) {
+    if (event.checked) {
+      this.getAllArticulos();
+    } else {
+      // ❌ El checkbox se desmarcó
+      console.log('Articulo desmarcado');
+    }
+  }
+
+  getAllArticulos() {
+    this.articulosService.getAllBreakfastItems().subscribe({
+      next: (res: any) => {
+        this.articulos = res.content;
+      },
+      error: (err) => {
+        console.error(err);
+        this.articulos = [];
+      }
+    });
+  }
+
+
   guardar() {
     this.saveConduce$().subscribe((ok) => {
       if (ok) {
@@ -205,7 +232,9 @@ export class ConducesComponent implements OnInit {
         this.getEscuelas();
         this.getMonthMenu();
         this.dataSource.data = this.conduces = [];
-
+        this.selectArticulo = false;
+        this.articuloId = null;
+        this.articulos = [];
       } else {
 
       }
@@ -268,8 +297,13 @@ export class ConducesComponent implements OnInit {
     // Por cada día y por cada escuela, agregar item
     const nuevos: Conduce[] = [];
     for (const day of days) {
+      let articulo;
       const fechaStr = this.toYYYYMMDD(day);
-      const articulo = this.getArticuloPorFecha(day);
+      if (!this.fechaHasta && this.selectArticulo && this.articuloId !== null) {
+        articulo = this.articuloId;
+      } else {
+        articulo = this.getArticuloPorFecha(day);
+      }
 
       for (const school of schoolsToUse) {
         if (this.alreadyExists(school.id, fechaStr)) {

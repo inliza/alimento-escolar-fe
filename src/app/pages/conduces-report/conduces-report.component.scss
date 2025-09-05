@@ -6,9 +6,23 @@
   padding: 0 10px !important;
 }
 
+.actions-button {
+  border: solid 1px;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+
+.btn-print {
+  border-color: gray;
+  color: gray;
+}
+
 .option-button {
-    border: solid 1px;
-    width: 130px;
-    height: 40px;
-    border-radius: 5px;
+  border: solid 1px;
+  width: 130px;
+  height: 40px;
+  border-radius: 5px;
 }

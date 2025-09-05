@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { NgxLoadingModule } from 'ngx-loading';
 import Swal from 'sweetalert2';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ItemsService } from 'src/app/services/items.service';
 
 @Component({
   selector: 'app-conduces-history',
@@ -53,11 +54,16 @@ export class ConducesHistoryComponent implements OnInit {
   escuelas: any[] = [];
   fechaHastaDate: Date | null = null;
   fechaHasta = false;
+  editing = false;
+  articuloId: any | null = null;
+  articulos: any[] = [];
 
   constructor(
     private readonly schoolService: SchoolService,
     private readonly conduceService: ConduceDesayunoService,
-    private router: Router
+    private router: Router,
+    private articulosService: ItemsService,
+
   ) { }
 
 
@@ -146,6 +152,13 @@ export class ConducesHistoryComponent implements OnInit {
     });
   }
 
+  editar() {
+    this.editing = !this.editing;
+    if (this.editing) {
+      this.getAllArticulos();
+    }
+  }
+
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -159,14 +172,26 @@ export class ConducesHistoryComponent implements OnInit {
   }
 
   imprimir() {
-     const seleccionados = this.selection.selected.length
-    ? this.selection.selected
-    : this.dataSource.data;
+    const seleccionados = this.selection.selected.length
+      ? this.selection.selected
+      : this.dataSource.data;
 
     sessionStorage.setItem('conduces_print', JSON.stringify(seleccionados));
     window.open(this.router.serializeUrl(this.router.createUrlTree(['print/conduces'])), '_blank');
-
   }
+
+  getAllArticulos() {
+    this.articulosService.getAllBreakfastItems().subscribe({
+      next: (res: any) => {
+        this.articulos = res.content;
+      },
+      error: (err) => {
+        console.error(err);
+        this.articulos = [];
+      }
+    });
+  }
+
 
   get fechaMinimaHasta(): Date | null {
     if (!this.selectedDate) return null;
