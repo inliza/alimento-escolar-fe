@@ -30,7 +30,7 @@ export class RelacionConduceReportComponent implements OnInit, AfterViewInit {
   granTotal = 0;
   company: any;
   rightLabel = '';
-
+  leftLabel = ''
   constructor(
     private service: UsersService
   ) { }
@@ -87,15 +87,25 @@ export class RelacionConduceReportComponent implements OnInit, AfterViewInit {
     };
     const unique = new Set(this.filas.map(r => norm(r.fecha)));
 
-    // Tomamos la primera fecha de la lista (ya ordenada o como venga)
-    const first = new Date(this.filas[0].fecha);
+    let first: Date;
+    if (typeof this.filas[0].fecha === 'string') {
+      // Es un string, hacemos el split de forma segura
+      const [year, month, day] = this.filas[0].fecha.split('-').map(Number);
+      first = new Date(year, month - 1, day);
+    } else {
+      // Ya es un Date, lo usamos directamente
+      first = this.filas[0].fecha;
+    }
+
     const dia = first.getDate();
     const mes = first.toLocaleDateString('es-ES', { month: 'long' }).toUpperCase();
     const anio = first.getFullYear();
 
     if (unique.size > 1) {
       this.rightLabel = `MES DE ${mes} DEL ${anio}`;
+      this.leftLabel = `RELACIÓN DE CONDUCE GENERAL`;
     } else {
+      this.leftLabel = `RELACIÓN DE CONDUCE DIARIA`;
       this.rightLabel = `DÍA ${dia} DE ${mes} DEL ${anio}`;
     }
   }
