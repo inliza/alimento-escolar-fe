@@ -37,6 +37,19 @@ export class ConduceDesayunoService {
         return this.http.get<any>(urlAPI, { params });
     }
 
+    getByDateDeleted(schoolId: number, from: string, to?: string): Observable<any> {
+
+        let params = new HttpParams()
+            .set('from', from);
+
+        params = params.set('schoolId', schoolId);
+
+        if (to) params = params.set('to', to);
+
+        const urlAPI = this.globals.urlApi + `conduces-desayuno/deleted/by-date`;
+        return this.http.get<any>(urlAPI, { params });
+    }
+
     delete(id: number): Observable<any> {
         const urlAPI = this.globals.urlApi + `conduces-desayuno/delete/${id}`;
         return this.http.delete<any>(urlAPI);
@@ -58,6 +71,11 @@ export class ConduceDesayunoService {
 
         const urlAPI = this.globals.urlApi + `conduces-desayuno/relacion`;
         return this.http.get<any>(urlAPI, { params });
+    }
+
+    recoverConduces(ids: number[]): Observable<any> {
+        const urlAPI = this.globals.urlApi + 'conduces-desayuno/restore';
+        return this.http.post<any>(urlAPI, { ids });
     }
 
 }

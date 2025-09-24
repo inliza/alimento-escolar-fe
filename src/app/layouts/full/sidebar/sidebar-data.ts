@@ -45,6 +45,12 @@ export const navItems: NavItem[] = [
     route: '/ui-components/conduces-report',
     chip: true,
   },
+    {
+    displayName: 'Recuperar Conduce',
+    iconName: 'solar:archive-up-outline',
+    route: '/ui-components/conduces-recover',
+    chip: true,
+  },
   // {
   //   displayName: 'Relacion de Conduces',
   //   iconName: 'solar:calendar-mark-line-duotone',

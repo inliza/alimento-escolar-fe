@@ -14,6 +14,7 @@ import { MenuComponent } from '../menu/menu.component';
 import { BreakfastItemsComponent } from '../breakfast-items/breakfast-items.component';
 import { ConducesHistoryComponent } from '../conduces-history/conduces-history.component';
 import { ConducesReportComponent } from '../conduces-report/conduces-report.component';
+import { ConducesRecoverComponent } from '../conduces-recover/conduces-recover.component';
 
 export const UiComponentsRoutes: Routes = [
   {
@@ -70,6 +71,10 @@ export const UiComponentsRoutes: Routes = [
       {
         path: 'conduces-report',
         component: ConducesReportComponent
+      },
+       {
+        path: 'conduces-recover',
+        component: ConducesRecoverComponent
       }
     ],
   },
