@@ -56,6 +56,11 @@
                         Imprimir
                     </button>
 
+                       <button *ngIf="selection.hasValue() && !editing" class="actions-button btn-delete" mat-raised-button
+                        color="warn" (click)="eliminarVarios()">
+                        Eliminar
+                    </button>
+
                     <!-- *ngIf="conduces.length > 0 && selection.hasValue()" -->
                     <button *ngIf="false" class="actions-button btn-edit"
                         mat-raised-button color="warn" (click)="editar()">

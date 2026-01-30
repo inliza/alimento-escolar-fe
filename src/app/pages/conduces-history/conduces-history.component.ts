@@ -114,6 +114,56 @@ export class ConducesHistoryComponent implements OnInit {
     });
   }
 
+  eliminarVarios() {
+    const count = this.selection.selected.length;
+    if (count === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Atención',
+        text: 'No hay conduces seleccionados.'
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Atención',
+      text: `¿Está seguro que desea eliminar ${count} conduce(s) seleccionados?`,
+      confirmButtonText: 'Si',
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      customClass: {
+        confirmButton: 'my-confirm-button'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        const ids = this.selection.selected.map((s: any) => s.id);
+        this.conduceService.softDeleteBulk(ids).subscribe({
+          next: (res) => {
+            this.loading = false;
+            Swal.fire({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: res?.message || 'Conduces eliminados correctamente.'
+            });
+            this.selection.clear();
+            this.getByDate();
+          },
+          error: (err) => {
+            this.loading = false;
+            console.error('Error al eliminar conduces:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: err?.error?.message || 'Hubo un problema al eliminar los conduces.'
+            });
+          }
+        });
+      }
+    });
+  }
+
 
   eliminar(element: any) {
     console.log('Eliminar', element);

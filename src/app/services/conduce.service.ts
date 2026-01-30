@@ -78,4 +78,9 @@ export class ConduceDesayunoService {
         return this.http.post<any>(urlAPI, { ids });
     }
 
+    softDeleteBulk(ids: number[]): Observable<any> {
+        const urlAPI = this.globals.urlApi + 'conduces-desayuno/bulk-delete';
+        return this.http.post<any>(urlAPI, { ids });
+    }
+
 }
