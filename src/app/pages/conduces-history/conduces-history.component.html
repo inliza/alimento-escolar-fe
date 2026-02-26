@@ -10,7 +10,8 @@
                 <div class="col-12 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Escuela</mat-label>
-                        <mat-select name="articuloid" [(ngModel)]="selectSchoolId" required #articuloid="ngModel">
+                        <mat-select name="articuloid" [(ngModel)]="selectSchoolId" required #articuloid="ngModel"
+                            [disabled]="useCode">
                             <mat-option value="0">Todas</mat-option>
                             <mat-option *ngFor="let loc of escuelas" [value]="loc.id">
                                 {{ loc.nombre }}
@@ -21,13 +22,32 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="d-flex gap-2 align-items-start">
+
+                        <mat-form-field appearance="outline" class="flex-grow-1">
+                            <mat-label>Código</mat-label>
+                            <input type="number" matInput name="codigo" [(ngModel)]="codigo"
+                                [disabled]="!useCode" [required]="useCode" #codigoCtrl="ngModel" />
+                            <mat-error *ngIf="codigoCtrl.invalid && codigoCtrl.touched">
+                                Ingrese un código para continuar
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-checkbox class="mt-2" name="useCode" [(ngModel)]="useCode" (change)="onToggleUseCode()">
+
+                        </mat-checkbox>
+
+                    </div>
+                </div>
             </div>
             <div class="row g-2">
                 <div class="col-12 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Fecha Desde</mat-label>
                         <input matInput [matDatepicker]="picker" placeholder="Selecciona fecha"
-                            [(ngModel)]="selectedDate">
+                            [(ngModel)]="selectedDate" [disabled]="useCode">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -44,7 +64,8 @@
                     </mat-form-field>
 
                     <!-- Checkbox -->
-                    <mat-checkbox style="margin-bottom: 9px;" class="ms-2" [(ngModel)]="fechaHasta" name="fechaHasta">
+                    <mat-checkbox [disabled]="useCode" style="margin-bottom: 9px;" class="ms-2" [(ngModel)]="fechaHasta"
+                        name="fechaHasta">
                     </mat-checkbox>
                 </div>
             </div>
@@ -56,14 +77,14 @@
                         Imprimir
                     </button>
 
-                       <button *ngIf="selection.hasValue() && !editing" class="actions-button btn-delete" mat-raised-button
+                    <button *ngIf="selection.hasValue() && !editing" class="actions-button btn-delete" mat-raised-button
                         color="warn" (click)="eliminarVarios()">
                         Eliminar
                     </button>
 
                     <!-- *ngIf="conduces.length > 0 && selection.hasValue()" -->
-                    <button *ngIf="false" class="actions-button btn-edit"
-                        mat-raised-button color="warn" (click)="editar()">
+                    <button *ngIf="false" class="actions-button btn-edit" mat-raised-button color="warn"
+                        (click)="editar()">
                         {{editing ? 'Cancelar' : 'Editar'}}
                     </button>
 
@@ -87,8 +108,8 @@
                         </mat-error>
                     </mat-form-field>
                     <button mat-raised-button color="primary" class="option-button"
-                        [disabled]="!selectSchoolId || !selectedDate || (this.fechaHasta && !this.fechaHastaDate) || editing"
-                        (click)="getByDate()">
+                        [disabled]="isBuscarDisabled"
+                        (click)="useCode ? getByCodigo() : getByDate()">
                         Buscar
                     </button>
                 </div>

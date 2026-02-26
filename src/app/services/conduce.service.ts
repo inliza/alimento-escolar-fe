@@ -83,4 +83,14 @@ export class ConduceDesayunoService {
         return this.http.post<any>(urlAPI, { ids });
     }
 
+    getByCodigo(codigo: number, deleted: boolean): Observable<any[]> {
+        const urlAPI = this.globals.urlApi + 'conduces-desayuno/by-codigo';
+
+        const params = new HttpParams()
+            .set('codigo', String(codigo))
+            .set('deleted', String(deleted));
+
+        return this.http.get<any>(urlAPI, { params });
+    }
+
 }

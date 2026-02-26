@@ -48,6 +48,8 @@ export class ConducesHistoryComponent implements OnInit {
   pageSize = 10;
 
   selectSchoolId: number | null = null;
+  codigo: number | null = null;
+
   selectedDate: Date | null = null;
 
   conduces: Conduce[] = [];
@@ -57,6 +59,7 @@ export class ConducesHistoryComponent implements OnInit {
   editing = false;
   articuloId: any | null = null;
   articulos: any[] = [];
+  useCode = false;
 
   constructor(
     private readonly schoolService: SchoolService,
@@ -71,6 +74,18 @@ export class ConducesHistoryComponent implements OnInit {
     // this.getNextConduce();
     this.getEscuelas();
     // this.getMonthMenu();
+  }
+
+
+
+  onToggleUseCode() {
+    if (this.useCode) {
+      this.selectSchoolId = 0;
+      this.selectedDate = null;
+      this.fechaHastaDate = null;
+    } else {
+      this.codigo = null;
+    }
   }
 
 
@@ -89,6 +104,34 @@ export class ConducesHistoryComponent implements OnInit {
   getByDate() {
     this.loading = true;
     this.conduceService.getByDate(this.selectSchoolId ?? 0, this.toYYYYMMDD(this.selectedDate), this.fechaHasta ? this.toYYYYMMDD(this.fechaHastaDate) : undefined).subscribe((data: any) => {
+      this.loading = false;
+      this.dataSource.data = this.conduces = data.content.map((c: any) => ({
+        id: c.id,
+        codigo: c.codigoConduce,
+        escuelaId: c.escuelaId,
+        articuloId: c.articuloId,
+        cantidad: c.cantidad,
+        precio: Number(c.precio),
+        total: Number(c.total),
+        itbis: Number(c.itbis ?? 0),
+        fecha: typeof c.fechaEntrega === 'string'
+          ? c.fechaEntrega.substring(0, 10)
+          : c.fechaEntrega,
+        articulo: c.articulo,
+        escuela: c.escuela,
+      }));
+    }, err => {
+      this.loading = false;
+      Swal.fire({
+        title: 'Atención',
+        text: err.error.message,
+      });
+    });
+  }
+
+  getByCodigo() {
+    this.loading = true;
+    this.conduceService.getByCodigo(this.codigo ?? 0, false).subscribe((data: any) => {
       this.loading = false;
       this.dataSource.data = this.conduces = data.content.map((c: any) => ({
         id: c.id,
@@ -259,6 +302,35 @@ export class ConducesHistoryComponent implements OnInit {
     const m = pad(d.getMonth() + 1);
     const day = pad(d.getDate());
     return `${y}-${m}-${day}`;
+  }
+
+  get isBuscarDisabled(): boolean {
+    if (this.editing) return true;
+
+
+    if (!this.useCode) {
+      const fechasInvalidas =
+        !this.selectedDate || (this.fechaHasta && !this.fechaHastaDate);
+
+      if (fechasInvalidas) return true;
+
+      return !this.selectSchoolId || this.selectSchoolId === 0;
+
+    }
+
+
+    if (this.useCode) {
+
+      if (this.codigo === null || this.codigo === undefined) return true;
+
+      if (isNaN(this.codigo)) return true;
+
+      if (this.codigo < 1000) return true;
+
+      return false;
+    }
+
+    return false;
   }
 
 }
