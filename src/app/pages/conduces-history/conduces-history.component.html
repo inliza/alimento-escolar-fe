@@ -10,7 +10,7 @@
                 <div class="col-12 col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Escuela</mat-label>
-                        <mat-select name="articuloid" [(ngModel)]="selectSchoolId" required #articuloid="ngModel"
+                        <mat-select name="articuloid" [(ngModel)]="selectSchoolId" (ngModelChange)="onSearchParamChange()" required #articuloid="ngModel"
                             [disabled]="useCode">
                             <mat-option value="0">Todas</mat-option>
                             <mat-option *ngFor="let loc of escuelas" [value]="loc.id">
@@ -28,8 +28,8 @@
 
                         <mat-form-field appearance="outline" class="flex-grow-1">
                             <mat-label>Código</mat-label>
-                            <input type="number" matInput name="codigo" [(ngModel)]="codigo"
-                                [disabled]="!useCode" [required]="useCode" #codigoCtrl="ngModel" />
+                            <input type="number" matInput name="codigo" [(ngModel)]="codigo" [disabled]="!useCode"
+                                [required]="useCode" #codigoCtrl="ngModel" />
                             <mat-error *ngIf="codigoCtrl.invalid && codigoCtrl.touched">
                                 Ingrese un código para continuar
                             </mat-error>
@@ -47,7 +47,7 @@
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Fecha Desde</mat-label>
                         <input matInput [matDatepicker]="picker" placeholder="Selecciona fecha"
-                            [(ngModel)]="selectedDate" [disabled]="useCode">
+                            [(ngModel)]="selectedDate" (ngModelChange)="onSearchParamChange()" [disabled]="useCode">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -57,7 +57,7 @@
                     <mat-form-field appearance="outline" class="flex-grow-1">
                         <mat-label>Fecha Hasta</mat-label>
                         <input matInput [matDatepicker]="pickerTo" placeholder="Selecciona fecha"
-                            [(ngModel)]="fechaHastaDate" [disabled]="!fechaHasta" [min]="fechaMinimaHasta">
+                            [(ngModel)]="fechaHastaDate" (ngModelChange)="onSearchParamChange()" [disabled]="!fechaHasta" [min]="fechaMinimaHasta">
                         <mat-datepicker-toggle matSuffix [for]="pickerTo" [disabled]="!fechaHasta">
                         </mat-datepicker-toggle>
                         <mat-datepicker #pickerTo></mat-datepicker>
@@ -65,7 +65,7 @@
 
                     <!-- Checkbox -->
                     <mat-checkbox [disabled]="useCode" style="margin-bottom: 9px;" class="ms-2" [(ngModel)]="fechaHasta"
-                        name="fechaHasta">
+                        (change)="onSearchParamChange()" name="fechaHasta">
                     </mat-checkbox>
                 </div>
             </div>
@@ -80,6 +80,11 @@
                     <button *ngIf="selection.hasValue() && !editing" class="actions-button btn-delete" mat-raised-button
                         color="warn" (click)="eliminarVarios()">
                         Eliminar
+                    </button>
+
+                    <button *ngIf="conduces.length > 0 && selection.hasValue() && selectSchoolId !== null && selectSchoolId !== undefined" class="actions-button btn-edit"
+                        mat-raised-button color="warn" (click)="actualizarRacionesActuales()"  matTooltip="Esta opcion actualiza los conduces a las raciones actuales de la escuela seleccionada">
+                        {{editing ? 'Cancelar' : 'Actualizar conduces raciones actuales'}}
                     </button>
 
                     <!-- *ngIf="conduces.length > 0 && selection.hasValue()" -->
@@ -107,8 +112,7 @@
                             Seleccione un artículo
                         </mat-error>
                     </mat-form-field>
-                    <button mat-raised-button color="primary" class="option-button"
-                        [disabled]="isBuscarDisabled"
+                    <button mat-raised-button color="primary" class="option-button" [disabled]="isBuscarDisabled"
                         (click)="useCode ? getByCodigo() : getByDate()">
                         Buscar
                     </button>

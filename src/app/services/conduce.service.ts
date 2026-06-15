@@ -83,6 +83,11 @@ export class ConduceDesayunoService {
         return this.http.post<any>(urlAPI, { ids });
     }
 
+    updateRacionesActuales(ids: number[], schoolId?: number): Observable<any> {
+        const urlAPI = this.globals.urlApi + 'conduces-desayuno/update-raciones-actuales';
+        return this.http.post<any>(urlAPI, { ids, schoolId });
+    }
+
     getByCodigo(codigo: number, deleted: boolean): Observable<any[]> {
         const urlAPI = this.globals.urlApi + 'conduces-desayuno/by-codigo';
 

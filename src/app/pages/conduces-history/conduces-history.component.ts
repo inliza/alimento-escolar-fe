@@ -86,6 +86,14 @@ export class ConducesHistoryComponent implements OnInit {
     } else {
       this.codigo = null;
     }
+    // limpiar resultados cuando se cambia el modo de búsqueda
+    this.onSearchParamChange();
+  }
+
+  onSearchParamChange(): void {
+    this.dataSource.data = [];
+    this.conduces = [];
+    this.selection.clear();
   }
 
 
@@ -120,6 +128,8 @@ export class ConducesHistoryComponent implements OnInit {
         articulo: c.articulo,
         escuela: c.escuela,
       }));
+      // limpiar selección al actualizar los resultados de búsqueda
+      this.selection.clear();
     }, err => {
       this.loading = false;
       Swal.fire({
@@ -131,6 +141,8 @@ export class ConducesHistoryComponent implements OnInit {
 
   getByCodigo() {
     this.loading = true;
+    // limpiar selección antes de iniciar búsqueda
+    this.selection.clear();
     this.conduceService.getByCodigo(this.codigo ?? 0, false).subscribe((data: any) => {
       this.loading = false;
       this.dataSource.data = this.conduces = data.content.map((c: any) => ({
@@ -148,6 +160,8 @@ export class ConducesHistoryComponent implements OnInit {
         articulo: c.articulo,
         escuela: c.escuela,
       }));
+      // asegurar que la selección esté vacía después de la búsqueda
+      this.selection.clear();
     }, err => {
       this.loading = false;
       Swal.fire({
@@ -250,6 +264,53 @@ export class ConducesHistoryComponent implements OnInit {
     if (this.editing) {
       this.getAllArticulos();
     }
+  }
+
+  actualizarRacionesActuales() {
+    const ids = this.selection.selected.map((s: any) => s.id);
+    if (ids.length === 0) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Atención',
+        text: 'No hay conduces seleccionados.'
+      });
+      return;
+    }
+
+    Swal.fire({
+      icon: 'question',
+      title: 'Confirmar',
+      text: `¿Está seguro que desea actualizar las raciones de ${ids.length} conduce(s)?`,
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.conduceService.updateRacionesActuales(ids, this.selectSchoolId ?? 0).subscribe({
+          next: (res) => {
+            this.loading = false;
+            Swal.fire({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: res?.message || 'Raciones actualizadas correctamente.'
+            });
+            this.selection.clear();
+            this.getByDate();
+            this.editing = false;
+          },
+          error: (err) => {
+            this.loading = false;
+            console.error('Error al actualizar raciones:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: err?.error?.message || 'Hubo un problema al actualizar las raciones.'
+            });
+          }
+        });
+      }
+    });
   }
 
   isAllSelected(): boolean {
